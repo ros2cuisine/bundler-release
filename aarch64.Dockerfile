@@ -8,6 +8,8 @@ ARG FLAVOR_VERSION=bionic
 
 FROM ${TARGET_ARCH}/${FLAVOR}:${FLAVOR_VERSION}
 
+COPY qemu-aarch64-static /usr/bin/
+
 ARG VCS_REF
 ENV DEBIAN_FRONTEND noninteractive
 
