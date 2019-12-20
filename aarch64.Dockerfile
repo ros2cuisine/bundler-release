@@ -1,4 +1,3 @@
-
 ARG ROS_DISTRO=eloquent
 ARG GITLAB_USERNAME=ros2cuisine
 ARG TARGET_ARCH=arm64v8
@@ -6,9 +5,15 @@ ARG FUNCTION_NAME=bundler
 ARG FLAVOR=ubuntu
 ARG FLAVOR_VERSION=bionic
 
+FROM alpine AS qemu
+
+#QEMU Download
+ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-aarch64.tar.gz
+RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
+
 FROM ${TARGET_ARCH}/${FLAVOR}:${FLAVOR_VERSION}
 
-COPY qemu-aarch64-static /usr/bin/
+COPY --from=qemu qemu-aarch64-static /usr/bin
 
 ARG VCS_REF
 ENV DEBIAN_FRONTEND noninteractive

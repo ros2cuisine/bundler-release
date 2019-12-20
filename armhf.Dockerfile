@@ -6,9 +6,15 @@ ARG FUNCTION_NAME=bundler
 ARG FLAVOR=ubuntu
 ARG FLAVOR_VERSION=bionic
 
+FROM alpine AS qemu
+
+#QEMU Download
+ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-arm.tar.gz
+RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
+
 FROM ${TARGET_ARCH}/${FLAVOR}:${FLAVOR_VERSION}
 
-COPY /usr/bin/qemu-arm-static /usr/bin/
+COPY --from=qemu qemu-arm-static /usr/bin
 
 ARG VCS_REF
 ENV DEBIAN_FRONTEND noninteractive
@@ -26,7 +32,7 @@ RUN apt update \
 WORKDIR /cuisine/workspaces
 
 # Finishing the image
-ENTRYPOINT ["/opt/ros/$ROS_DISTRO/ros_entrypoint.sh"]
+ENTRYPOINT ["/opt/ros/eloquent/ros_entrypoint.sh"]
 CMD ["bash"]
 
 LABEL org.label-schema.name="${GITLAB_USERNAME}/${FUNCTION_NAME}:${ROS_DISTRO}-${TARGET_ARCH}-${VCS_REF}" \
