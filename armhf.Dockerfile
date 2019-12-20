@@ -8,7 +8,7 @@ ARG FLAVOR_VERSION=bionic
 
 FROM ${TARGET_ARCH}/${FLAVOR}:${FLAVOR_VERSION}
 
-COPY qemu-arm-static /usr/bin/
+COPY /usr/bin/qemu-arm-static /usr/bin/
 
 ARG VCS_REF
 ENV DEBIAN_FRONTEND noninteractive
