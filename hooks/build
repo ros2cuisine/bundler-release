@@ -2,7 +2,7 @@
 
 BUILD_ARCH=$(echo "${DOCKERFILE_PATH}" | rev | cut -d '.' -f 2 | rev)
 
-docker build --squash \
+docker build \
     --file "${DOCKERFILE_PATH}" \
     --build-arg BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
     --build-arg VCS_REF="$(git rev-parse --short HEAD)" \
