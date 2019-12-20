@@ -9,7 +9,7 @@ docker build \
     --build-arg ROS_DISTRO=eloquent \
     --build-arg DOCKER_REPO="${DOCKER_REPO}" \
     --build-arg TARGET_ARCH=$(echo "${DOCKER_TAG}" | cut -d '-' -f 2 | rev | cut -d '-' -f 2 | rev) \
-    --build-arg DOCKERHUB_REPO=bundler \
+    --build-arg DOCKERHUB_REPO=ros \
     --build-arg DOCKERHUB_NAME=ros2cuisine \
     --build-arg ROS_DISTRO=eloquent \
     --build-arg FLAVOR_VERSION=eloquent-ros-core \
