@@ -1,15 +1,11 @@
 # Setup variables
-ARG ROS_DISTRO=eloquent
-ARG GITLAB_USERNAME=ros2cuisine
-ARG TARGET_ARCH=amd64
-ARG FUNCTION_NAME=bundler
-ARG FLAVOR=ros
-ARG FLAVOR_VERSION=eloquent-ros-core
+ARG TARGET_ARCH
+ARG DOCKERHUB_REPO
+ARG FLAVOR_VERSION
 
 # Pull image
-FROM ${TARGET_ARCH}/${FLAVOR}:${FLAVOR_VERSION}
+FROM ${TARGET_ARCH}/${DOCKERHUB_REPO}:${FLAVOR_VERSION}
 
-ARG VCS_REF
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt update \
@@ -19,16 +15,25 @@ RUN apt update \
     #    python3-numpy \
     && rm -rf /var/lib/apt/lists/* \
     # Create Working directory for builds
-    && mkdir -p /cuisine/workspaces
+    && mkdir -p /workspaces/cuisine
 
 # Choose the directory for builds
-WORKDIR /cuisine/workspaces
+WORKDIR /workspaces/cuisine
+
+ARG ROS_DISTRO=eloquent
+ENV ROS_DISTRO ${ROS_DISTRO}
 
 # Finishing the image
-ENTRYPOINT ["/opt/ros/$ROS_DISTRO/ros_entrypoint.sh"]
+ENTRYPOINT ["/workspaces/cuisine/${ROS_DISTRO}-entrypoint.sh"]
+
 CMD ["bash"]
 
-LABEL org.label-schema.name="${GITLAB_USERNAME}/${FUNCTION_NAME}:${ROS_DISTRO}-${TARGET_ARCH}-${VCS_REF}" \
+ARG DOCKERHUB_NAME
+ARG DOCKER_REPO
+ARG IMAGE_NAME
+ARG VCS_REF
+
+LABEL org.label-schema.name="${DOCKERHUB_NAME}/${DOCKER_REPO}:$IMAGE_NAME}-${VCS_REF}" \
       org.label-schema.description="The Minimal build image for cuisine Docker images" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vcs-url="https://hub.docker.com/ros2cuisine/builder" \
