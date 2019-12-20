@@ -1,4 +1,4 @@
-image: ros2cuisine/bundler:eloquent-latest
+image: ros2cuisine/bundler:latest
 manifests:
   - image: ros2cuisine/bundler:eloquent-amd-64-latest
     platform:

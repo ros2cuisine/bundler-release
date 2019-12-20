@@ -1,11 +1,12 @@
-
+# Setup variables
 ARG ROS_DISTRO=eloquent
 ARG GITLAB_USERNAME=ros2cuisine
 ARG TARGET_ARCH=amd64
 ARG FUNCTION_NAME=bundler
-ARG FLAVOR=ubuntu
-ARG FLAVOR_VERSION=bionic
+ARG FLAVOR=ros
+ARG FLAVOR_VERSION=eloquent-ros-core
 
+# Pull image
 FROM ${TARGET_ARCH}/${FLAVOR}:${FLAVOR_VERSION}
 
 ARG VCS_REF

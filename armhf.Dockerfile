@@ -1,11 +1,12 @@
-
+# Set environment variables
 ARG ROS_DISTRO=eloquent
 ARG GITLAB_USERNAME=ros2cuisine
 ARG TARGET_ARCH=arm32v7
 ARG FUNCTION_NAME=bundler
-ARG FLAVOR=ubuntu
-ARG FLAVOR_VERSION=bionic
+ARG FLAVOR=ros
+ARG FLAVOR_VERSION=eloquent-ros-core
 
+#Setup Qemu
 FROM alpine AS qemu
 
 #QEMU Download
@@ -13,6 +14,7 @@ ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/
 
 RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 
+#pull image
 FROM ${TARGET_ARCH}/${FLAVOR}:${FLAVOR_VERSION}
 
 COPY --from=qemu qemu-arm-static /usr/bin
