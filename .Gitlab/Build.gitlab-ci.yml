@@ -1,0 +1,10 @@
+build:
+    stage: build
+    image: ros2cuisine/builder
+    script:
+       - cd ros2_ws
+       - colcon build
+    except:
+      refs:
+        - master
+  

@@ -1,0 +1,23 @@
+image: docker:latest
+
+variables:
+  DB_USER: cuisine
+
+
+stages:
+  - build
+  - test
+#  - review
+#  - staging
+#  - deploy
+#  - cleanup
+
+include:
+  - template: .Gitlab/Build.gitlab-ci.yml
+  - template: .Gitlab/Test.gitlab-ci.yml
+  #- template: .Gitlab/Code-Quality.gitlab-ci.yml
+  #- template: .Gitlab/Deploy.gitlab-ci.yml
+  #- template: .Gitlab/Performance-Testing.gitlab-ci.yml
+  #- template: .Gitlab/Container-Scanning.gitlab-ci.yml
+  #- template: .Gitlab/Dependency-Scanning.gitlab-ci.yml
+  #- template: .Gitlab/License-Management.gitlab-ci.yml

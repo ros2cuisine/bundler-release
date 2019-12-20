@@ -1,0 +1,17 @@
+test:
+    stage: test
+    image: cuisine/dev:latest
+    script:
+      - cd ros2_ws
+      - source /opt/ros/eloquent/setup.bash
+      - colcon build
+      - colcon test
+    only:
+      - development
+      - staging
+    except:
+      refs:
+        - master
+      variables:
+        - $TEST_DISABLED
+  
