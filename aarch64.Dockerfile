@@ -30,8 +30,6 @@ ARG ROS_DISTRO
 
 ENV ROS_DISTRO ${ROS_DISTRO}
 
-RUN echo "${ROS_DISTRO}" && echo "{ROS_DISTRO}"
-
 COPY --from=qemu qemu-aarch64-static /usr/bin
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -49,7 +47,7 @@ RUN apt update \
 WORKDIR /workspaces/cuisine
 
 # Finishing the image
-ENTRYPOINT ["ros_entrypoint.sh"]
+ENTRYPOINT ["/workspaces/cuisine/ros_entrypoint.sh"]
 
 CMD ["bash"]
 

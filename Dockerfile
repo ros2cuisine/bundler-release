@@ -24,7 +24,7 @@ ARG ROS_DISTRO=eloquent
 ENV ROS_DISTRO ${ROS_DISTRO}
 
 # Finishing the image
-ENTRYPOINT ["/workspaces/cuisine/${ROS_DISTRO}-entrypoint.sh"]
+ENTRYPOINT ["/workspaces/cuisine/ros_entrypoint.sh"]
 
 CMD ["bash"]
 

@@ -39,7 +39,7 @@ RUN apt update \
 WORKDIR /workspaces/cuisine
 
 # Finishing the image
-ENTRYPOINT ["/opt/ros/eloquent/ros_entrypoint.sh"]
+ENTRYPOINT ["/workspaces/cuisine/ros_entrypoint.sh"]
 CMD ["bash"]
 
 ARG DOCKERHUB_NAME
