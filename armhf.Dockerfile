@@ -19,7 +19,7 @@ ARG DOCKERHUB_REPO=ros
 ARG FLAVOR_VERSION=eloquent-ros-core
 
 #pull image
-FROM ${TARGET_ARCH}/${DOCKERHUB_REPO}:${FLAVOR_VERSION}
+FROM ${TARGET_ARCH}/${DOCKERHUB_REPO}:${FLAVOR_VERSION} as bundle
 
 COPY --from=qemu qemu-arm-static /usr/bin
 
