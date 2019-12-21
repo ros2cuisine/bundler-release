@@ -1,14 +1,16 @@
 # The Bundle image that is the source for user images
 
-## Instructions
+## Important Note for Devs: Don't use any apt-get upgrade or other upgrade commands after this point. Head to the issue section to have a look whats holding the build back. Tip: Try to user a different [tag](https://hub.docker.com/repository/docker/ros2cuisine/bundler/tags)
 
-### Pull the latest image
+### Instructions
+
+#### Pull the latest image
 
 ```bash
 docker pull ros2cuisine/bundler:eloquent-amd64-latest
 ```
 
-### Example Dockerfile instructions for bundling
+#### Example Dockerfile instructions for bundling
 
 ```Dockerfile
 # Building the image
@@ -68,10 +70,10 @@ ENTRYPOINT [ "fwatchdog" ]
 CMD ["/bin/bash"]
 
 # Add your labels
-LABEL org.label-schema.name="ros2cuisine/builder:eloquent-x86_64" \
-      org.label-schema.description="The Minimal build image for cuisine Docker images cycle" \
+LABEL org.label-schema.name="${IMAGE_NAME}-${VCS_REF}" \
+      org.label-schema.description="Your new description" \
       org.label-schema.build-date=$BUILD_DATE \
-      org.label-schema.vcs-url="https://hub.docker.com/ros2cuisine/builder" \
+      org.label-schema.vcs-url="https://hub.docker.com/ros2cuisine/example" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.schema-version="1.0.0-rc1" \
       org.label-schema.maintainer="cuisine-dev@ichbestimmtnicht.de" \

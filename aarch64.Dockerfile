@@ -80,7 +80,7 @@ RUN pip3 install -U \
     && mkdir -p /workspaces/cuisine
 
 # setup entrypoint
-ADD https://raw.githubusercontent.com/ros2cuisine/bundler-release/e17677181374af6d8281c702d4a786ec1806b500/ros_entrypoint.sh /
+ADD https://raw.githubusercontent.com/ros2cuisine/bundler-release/master/ros_entrypoint.sh /
 
 # Choose the directory for builds
 WORKDIR /workspaces/cuisine
@@ -89,20 +89,3 @@ WORKDIR /workspaces/cuisine
 ENTRYPOINT ["/ros_entrypoint.sh"]
 
 CMD ["bash"]
-
-ARG DOCKERHUB_NAME
-ARG DOCKER_REPO
-ARG IMAGE_NAME
-ARG VCS_REF
-
-LABEL org.label-schema.name="${DOCKERHUB_NAME}/${DOCKER_REPO}:${IMAGE_NAME}-${VCS_REF}" \
-      org.label-schema.description="The Minimal build image for cuisine Docker images" \
-      org.label-schema.build-date=$BUILD_DATE \
-      org.label-schema.vcs-url="https://hub.docker.com/ros2cuisine/builder" \
-      org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.schema-version="1.0.0-rc1" \
-      org.label-schema.maintainer="cuisine-dev@ichbestimmtnicht.de" \
-      org.label-schema.url="https://github.com/ros2cuisine/cuisine/" \
-      org.label-schema.vendor="ichbestimmtnicht" \
-      org.label-schema.version=$BUILD_VERSION \
-      org.label-schema.docker.cmd="docker run -d ros2cuisine/builder"
