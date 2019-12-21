@@ -1,11 +1,11 @@
 # Setup variables
-ARG TARGET_ARCH=amd64
-ARG DOCKERHUB_REPO=ubuntu
-ARG FLAVOR_VERSION=bionic
+ARG BUILD_ARCH=amd64
+ARG BUILD_REPO=ubuntu
+ARG BUILD_VERSION=bionic
 ARG ROS_DISTRO=eloquent
 
 # Pull image
-FROM ${TARGET_ARCH}/${DOCKERHUB_REPO}:${FLAVOR_VERSION}
+FROM ${BUILD_ARCH}/${BUILD_REPO}:${BUILD_VERSION}
 
 # setup environment
 # dynamic

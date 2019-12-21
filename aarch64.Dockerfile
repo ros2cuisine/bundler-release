@@ -1,8 +1,7 @@
 # Setup variables
-
-ARG TARGET_ARCH=arm64v8
-ARG DOCKERHUB_REPO=ubuntu
-ARG FLAVOR_VERSION=bionic
+ARG BUILD_ARCH=arm64v8
+ARG BUILD_REPO=ubuntu
+ARG BUILD_VERSION=bionic
 ARG DOCKERHUB_NAME=ros2cuisine
 ARG IMAGE_NAME
 ARG VCS_REF
@@ -15,19 +14,19 @@ ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/
 
 RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 
-ARG TARGET_ARCH=arm64v8
-ARG DOCKERHUB_REPO=ubuntu
+ARG BUILD_ARCH=arm64v8
+ARG BUILD_REPO=ubuntu
 ARG BUILD_VERSION=bionic
 
 # Pull the image
-FROM ${TARGET_ARCH}/${DOCKERHUB_REPO}:${BUILD_VERSION} as bundle
+FROM ${BUILD_ARCH}/${BUILD_REPO}:${BUILD_VERSION} as bundle
 
 COPY --from=qemu qemu-aarch64-static /usr/bin
 
 # setup environment
 ARG ROS_DISTRO
-ARG TARGET_ARCH
-ARG DOCKERHUB_REPO=ros
+ARG BUILD_ARCH
+ARG BUILD_REPO=ubuntu
 # dynamic
 ENV ROS_DISTRO ${ROS_DISTRO}
 # static
