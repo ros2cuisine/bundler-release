@@ -19,6 +19,9 @@ RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 ARG TARGET_ARCH=arm32v7
 ARG DOCKERHUB_REPO=ros
 ARG FLAVOR_VERSION=eloquent-ros-core
+ENV TARGET_ARCH=arm32v7
+ENV DOCKERHUB_REPO=ros
+ENV FLAVOR_VERSION=eloquent-ros-core
 
 # Pull image
 FROM ${TARGET_ARCH}/${DOCKERHUB_REPO}:${FLAVOR_VERSION}
