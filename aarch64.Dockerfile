@@ -1,10 +1,9 @@
 # Setup variables
 
-ARG TARGET_ARCH
-ARG DOCKER_REPO
-ARG FLAVOR
-ARG FLAVOR_VERSION
-ARG DOCKERHUB_NAME
+ARG TARGET_ARCH=arm64v8
+ARG DOCKERHUB_REPO=ros
+ARG FLAVOR_VERSION=eloquent-ros-core
+ARG DOCKERHUB_NAME=ros2cuisine
 ARG IMAGE_NAME
 ARG VCS_REF
 
@@ -16,15 +15,13 @@ ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/
 
 RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 
-ARG TARGET_ARCH=arm32v7
+ARG TARGET_ARCH=arm64v8
 ARG DOCKERHUB_REPO=ros
 ARG FLAVOR_VERSION=eloquent-ros-core
-ENV TARGET_ARCH=arm32v7
-ENV DOCKERHUB_REPO=ros
-ENV FLAVOR_VERSION=eloquent-ros-core
 
-# Pull image
+# Pull the image
 FROM ${TARGET_ARCH}/${DOCKERHUB_REPO}:${FLAVOR_VERSION} as bundle
+
 ARG TARGET_ARCH=arm32v7
 ARG DOCKERHUB_REPO=ros
 ARG FLAVOR_VERSION=eloquent-ros-core
