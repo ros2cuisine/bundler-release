@@ -16,9 +16,20 @@ ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/
 
 RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 
+ARG TARGET_ARCH=arm32v7
+ARG DOCKERHUB_REPO=ros
+ARG FLAVOR_VERSION=eloquent-ros-core
+
 # Pull image
-FROM ${TARGET_ARCH}/${FLAVOR}:${FLAVOR_VERSION}
+FROM ${TARGET_ARCH}/${DOCKERHUB_REPO}:${FLAVOR_VERSION}
+
+
 ARG ROS_DISTRO
+
+ENV ROS_DISTRO ${ROS_DISTRO}
+
+RUN echo "${ROS_DISTRO}" && echo "{ROS_DISTRO}"
+
 COPY --from=qemu qemu-aarch64-static /usr/bin
 
 ENV DEBIAN_FRONTEND noninteractive
