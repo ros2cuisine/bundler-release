@@ -1,4 +1,4 @@
-# The Bundle image that is the source for user images
+# The Bundle image that is the source for other images
 
 ## Important Note for Devs: Don't use any apt-get upgrade or other upgrade commands after this point. Head to the issue section to have a look whats holding the build back. Tip: Try to user a different [tag](https://hub.docker.com/repository/docker/ros2cuisine/bundler/tags)
 

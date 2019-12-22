@@ -1,0 +1,24 @@
+#!/bin/bash
+DEST_BUILD_ARCH=$(echo "${DOCKER_TAG}" | cut -d '-' -f 2 | rev | cut -d '-' -f 2 | rev)
+DEST_OS=linux
+DOCKERHUB_HOST=https://hub.docker.com:
+DOCKERHUB_NAME=ros2cuisine
+DOCKERHUB_NAME_FROM=${DOCKERHUB_NAME}
+
+if [ ${DEST_BUILD_ARCH} == "amd64" ]; then
+        ARCH_TAG="amd64"
+elif [ ${DEST_BUILD_ARCH} == "arm32v7" ]; then
+        ARCH_TAG="arm"
+elif [ ${DEST_BUILD_ARCH} == "arm64v8" ]; then
+        ARCH_TAG="arm64 --variant armv8"
+else
+        echo "The buildarch is not referenced here. ARCH_TAG not set."
+fi
+
+echo $ARCH_TAG "SET"
+
+docker manifest create -a ${DOCKERHUB_NAME_FROM}/${IMAGE_NAME} ${DOCKERHUB_NAME}/${IMAGE_NAME}
+
+docker manifest annotate ${DOCKERHUB_NAME_FROM}/${IMAGE_NAME} ${DOCKERHUB_NAME}/${IMAGE_NAME} --os ${DEST_OS} --arch ${ARCH_TAG}
+
+docker manifest push ${DOCKERHUB_NAME_FROM}/${IMAGE_NAME}

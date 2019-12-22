@@ -7,12 +7,12 @@ echo "$(echo "${DOCKER_TAG}" | cut -d '-' -f 2 | rev | cut -d '-' -f 2 | rev)"
 docker build \
     --compress \
     --pull \
-    --label description="" \
+    --label description="The Bundle image that is the source for other images" \
     --label docker.cmd="docker run -d ros2cuisine/builder" \
     --label maintainer="cuisine@ichbestimmtnicht.de" \
     --label vendor="ichbestimmtnicht" \
-    --label vcs-url="" \
-    --label url="" \
+    --label vcs-url="https://gitlab.com/ros2cuisine/bundler" \
+    --label url="https://gitlab.com/ros2cuisine/bundler" \
     --label name="${IMAGE_NAME}" \
     --label version="${BUILD_VERSION}"\
     --label build-date="${BUILD_DATE}" \
