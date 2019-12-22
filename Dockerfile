@@ -20,7 +20,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # setup timezone
 RUN echo 'Etc/UTC' > /etc/timezone && \
-    ln -s /usr/share/zoneinfo/Etc/UTC /etc/localtime
+    ln -s -f /usr/share/zoneinfo/Etc/UTC /etc/localtime
 RUN apt-get update && apt-get install -q -y tzdata \
     && rm -rf /var/lib/apt/lists/*
 
