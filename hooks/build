@@ -18,7 +18,6 @@ docker build \
     --label build-date="${BUILD_DATE}" \
     --label vcs-ref="${VCS_REF}" \
     --label schema-version="1.0.0-rc1" \
-    --
     --file "${DOCKERFILE_PATH}" \
     --build-arg BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
     --build-arg VCS_REF="$(git rev-parse --short HEAD)" \
