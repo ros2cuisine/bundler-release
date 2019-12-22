@@ -11,6 +11,7 @@ chmod +x ./manifest-tool
 TARGET_ARCHES="amd64 arm32v7 arm64v8"
 DOCKER_TAG="eloquent-latest"
 SRC_NAME=ros2cuisine
+BUILD_TAG=staged
 ROS_DISTRO="$(echo "$DOCKER_TAG" | rev | cut -d '-' -f 2 | rev )"
 SRC_TAG=staged
 DEST_REPO=bundler
