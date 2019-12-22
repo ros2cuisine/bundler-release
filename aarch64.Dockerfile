@@ -23,9 +23,9 @@ FROM ${BUILD_USER_NAME}/${BUILD_REPO}:${BUILD_VERSION} as bundle
 
 COPY --from=qemu qemu-aarch64-static /usr/bin
 
-# setup environment
-ARG ROS_DISTRO
-ARG BUILD_USER_NAME
+# Setup environment
+ARG ROS_DISTRO=eloquent
+ARG SRC_USER_NAME
 ARG BUILD_REPO=ubuntu
 # dynamic
 ENV ROS_DISTRO ${ROS_DISTRO}
@@ -37,7 +37,8 @@ ENV DEBIAN_FRONTEND noninteractive
 # setup timezone
 RUN echo 'Etc/UTC' > /etc/timezone && \
     ln -s /usr/share/zoneinfo/Etc/UTC /etc/localtime && \
-    apt-get update && apt-get install -q -y tzdata && rm -rf /var/lib/apt/lists/*
+    apt-get update && apt-get install -q -y tzdata \
+    && rm -rf /var/lib/apt/lists/*
 
 # install packages
 RUN apt-get update && apt-get install -q -y \

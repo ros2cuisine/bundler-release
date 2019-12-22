@@ -1,5 +1,8 @@
 #!/bin/bash
 # Get the manifest-tool
+
+apt-get update && apt-get install wget -y -q
+
 wget -cO - https://github.com/estesp/manifest-tool/releases/download/v1.0.0/manifest-tool-linux-arm64 /bin/ > manifest-tool
 
 chmod +x ./manifest-tool
