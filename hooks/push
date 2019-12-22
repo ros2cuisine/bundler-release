@@ -1,0 +1,12 @@
+#!/bin/bash
+echo "Disable standardpush"
+
+# Get the manifest-tool
+wget -cO - https://github.com/estesp/manifest-tool/releases/download/v1.0.0/manifest-tool-linux-arm64 /bin/ > manifest-tool
+
+chmod +x ./manifest-tool
+# Push the docker image
+./manifest-tool push from-spec distro-manifest.yaml
+rm -f distro-manifest.yaml
+
+# 

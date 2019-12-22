@@ -1,11 +1,11 @@
 # Setup variables
-ARG BUILD_ARCH=amd64
+ARG SRC_USER_NAME=amd64
 ARG BUILD_REPO=ubuntu
 ARG BUILD_VERSION=bionic
 ARG ROS_DISTRO=eloquent
 
 # Pull image
-FROM ${BUILD_ARCH}/${BUILD_REPO}:${BUILD_VERSION}
+FROM ${SRC_USER_NAME}/${BUILD_REPO}:${BUILD_VERSION}
 
 # setup environment
 # dynamic

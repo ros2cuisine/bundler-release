@@ -1,5 +1,5 @@
 # Set environment variables
-ARG BUILD_ARCH=arm32v7
+ARG SRC_USER_NAME=arm32v7
 ARG BUILD_REPO=ubuntu
 ARG BUILD_VERSION=bionic
 ARG DOCKERHUB_NAME=ros2cuisine
@@ -14,18 +14,18 @@ ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/
 
 RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 
-ARG BUILD_ARCH=arm32v7
+ARG SRC_USER_NAME=arm32v7
 ARG BUILD_REPO=ubuntu
 ARG BUILD_VERSION=bionic
 
 # Pull image
-FROM ${BUILD_ARCH}/${BUILD_REPO}:${BUILD_VERSION} as bundle
+FROM ${SRC_USER_NAME}/${BUILD_REPO}:${BUILD_VERSION} as bundle
 
 COPY --from=qemu qemu-arm-static /usr/bin
 
 # Setup environment
 ARG ROS_DISTRO=eloquent
-ARG BUILD_ARCH
+ARG SRC_USER_NAME
 ARG BUILD_REPO=ubuntu
 # dynamic
 ENV ROS_DISTRO ${ROS_DISTRO}
