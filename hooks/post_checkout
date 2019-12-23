@@ -6,11 +6,18 @@ DEST_ARCHES="amd64 arm32v7 arm64v8"
 # Cycle trough the the arches
 for DEST_BUILD_ARCH in ${DEST_ARCHES}
 do
-    BUILD_ARCH=${DEST_BUILD_ARCH}
-    [ "${BUILD_ARCH}" == "amd64" ] && \
-    { echo 'qemu-user-static: Download not required for amd64'; continue; }
-    echo "DEBUG: Setting QEMU USER STATIC ${DEST_BUILD_ARCH}"
-    QEMU_USER_STATIC_ARCH=$([ "${BUILD_ARCH}" == "arm32v7" ] && echo "${BUILD_ARCH::-4}" || echo "${BUILD_ARCH}")
+    if [ ${DEST_BUILD_ARCH} == "amd64" ]; then
+        echo 'qemu-user-static: Download not required for amd64'
+        continue
+    elif [ ${DEST_BUILD_ARCH} == "arm32v7" ]; then
+        QEMU_USER_STATIC_ARCH="arm"
+    elif [ ${DEST_BUILD_ARCH} == "arm64v8" ]; then
+        QEMU_USER_STATIC_ARCH="aarch64"
+    else 
+        echo "DEBUG: DEST_BUILD_ARCH not referenced"
+        exit 1
+    fi
+    
     QEMU_USER_STATIC_DOWNLOAD_URL="https://github.com/multiarch/qemu-user-static/releases/download"
     QEMU_USER_STATIC_LATEST_TAG=$(curl -s https://api.github.com/repos/multiarch/qemu-user-static/tags \
         | grep 'name.*v[0-9]' \
@@ -20,3 +27,4 @@ do
     curl -SL "${QEMU_USER_STATIC_DOWNLOAD_URL}/${QEMU_USER_STATIC_LATEST_TAG}/x86_64_qemu-${QEMU_USER_STATIC_ARCH}-static.tar.gz" \
         | tar xzv
 done
+exit 0
