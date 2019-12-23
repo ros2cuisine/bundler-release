@@ -1,8 +1,6 @@
 #!/bin/bash
 
 # Local test values
-DEST_ARCHES="amd64 armhf arm64"
-DOCKER_TAG="eloquent-latest"
 
 # Environment
 SRC_NAME=ros2cuisine
@@ -66,6 +64,7 @@ do
     DOCKERFILE="${DOCKERFILE_PREFIX}Dockerfile"
     # Build the docker image
     docker build \
+        --push
         --compress \
         --pull \
         --label description="The Bundle image that is the source for other images" \
