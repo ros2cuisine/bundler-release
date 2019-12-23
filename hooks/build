@@ -8,7 +8,7 @@ DEST_REPO=bundler
 DEST_NAME="${SRC_NAME}"
 
 # dynamic Values
-apt-get update && apt-get install git date -y -q
+apt-get update && apt-get install git -y -q
 VCS_REF="$(git rev-parse --short HEAD)"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
