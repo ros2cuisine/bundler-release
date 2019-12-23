@@ -33,7 +33,7 @@ do
     # Set armhf
     elif [ ${DEST_BUILD_ARCH} == "arm32v7" ]; then
         DEST_ARCH="arm"
-        DOCKERFILE_PREFIX="armhf"
+        DOCKERFILE_PREFIX="armhf."
         echo "  - image: ${DEST_NAME}/${DEST_REPO}:${ROS_DISTRO}-${DEST_ARCH}-${DEST_TAG}" >> auto-docker-manifest.yaml
         echo "    platform:" >> auto-docker-manifest.yaml
         echo "      architecture: ${DEST_ARCH}" >> auto-docker-manifest.yaml
@@ -43,7 +43,7 @@ do
     # Set arm64
     elif [ ${DEST_BUILD_ARCH} == "arm64v8" ]; then
         DEST_ARCH="arm64"
-        DOCKERFILE_PREFIX="aarch64"
+        DOCKERFILE_PREFIX="aarch64."
         echo "  - image: ${DEST_NAME}/${DEST_REPO}:${ROS_DISTRO}-${DEST_ARCH}-${DEST_TAG}" >> auto-docker-manifest.yaml
         echo "    platform:" >> auto-docker-manifest.yaml
         echo "      architecture: ${DEST_ARCH}" >> auto-docker-manifest.yaml
@@ -72,7 +72,7 @@ do
         --label build-date="${BUILD_DATE}" \
         --label vcs-ref="${VCS_REF}" \
         --label schema-version="1.0.0-rc1" \
-        --file "${DOCKERFILE_PREFIX}.Dockerfile" \
+        --file "${DOCKERFILE}" \
         --build-arg BUILD_DATE=${BUILD_DATE} \
         --build-arg VCS_REF="${VCS_REF}" \
         --build-arg ROS_DISTRO=eloquent \
@@ -85,5 +85,3 @@ do
         --tag "${DEST_REPO}:${ROS_DISTRO}-${DEST_ARCH}-${BUILD_TAG}" \
         .
 done
-
-cat auto-docker-manifest.yaml
