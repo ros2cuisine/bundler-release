@@ -1,17 +1,14 @@
 #!/bin/bash
 
 # Local test values
-#ROS_DISTRO=eloquent
-#TARGET_ARCHES="amd64"
-#DOCKER_TAG=latest
 
 # Environment
-SRC_NAME=ros2cuisine
+DOCKERHUB_NAME=ros2cuisine
 DEST_REPO=bundler
 DEST_NAME="${SRC_NAME}"
 
 # dynamic Values
-apt-get update && apt-get install git -y -q
+apt-get update && apt-get install git date -y -q
 VCS_REF="$(git rev-parse --short HEAD)"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
@@ -20,22 +17,22 @@ echo "DEBUG: ${VCSREF} and ${BUILD_DATE}"
 if [ ${DOCKER_TAG} == "eloquent-latest" ]; then
     DEST_TAG="eloquent-latest"
     SRC_TAG="eloquent-staged"
-
 elif [ ${DOCKER_TAG} == "latest" ]; then
     DEST_TAG="latest"
     SRC_TAG="staged"
-
 else
     echo "not configured tag ${DOCKER_TAG}"
     exit 1
-
+fi
 # Begin generating manifest file
 echo "image: ${SRC_NAME}/${DEST_REPO}:${DEST_TAG}" > auto-docker-manifest.yaml
 echo "manifests:" >> auto-docker-manifest.yaml
 
+echo "TEST"
 # Cycle trough the the arches
 for DEST_BUILD_ARCH in ${DEST_ARCHES}
 do
+echo "DEBUG: Begin Cycle ${DEST_BUILD_ARCH}"
     DEST_OS="linux"
     # Set AMD64
     if [ ${DEST_BUILD_ARCH} == "amd64" ]; then
@@ -73,7 +70,9 @@ do
     else
         echo "DEBUG: The buildarch is not referenced here. DEST_ARCH not set."
         exit 1
+    fi
 
+    echo "Begin Building"
     DOCKERFILE="${DOCKERFILE_PREFIX}Dockerfile"
     # Build the docker image
     docker build \
@@ -100,9 +99,12 @@ do
         --build-arg BUILD_REPO=ubuntu \
         --build-arg BUILD_VERSION=bionic \
         --build-arg SRC_USER_NAME="${SRC_NAME}" \
-        --tag "${DEST_REPO}:${ROS_DISTRO}-${DEST_BUILD_ARCH}-${SRC_TAG}" \
+        --tag "${DEST_REPO}:${SRC_TAG}-${DEST_BUILD_ARCH}" \
         .
     echo "Pushing image"
-    docker push "${DEST_REPO}:${ROS_DISTRO}-${DEST_BUILD_ARCH}-${SRC_TAG}"
-fi
+    docker push "${DOCKERHUB_NAME}/${DEST_REPO}:${SRC_TAG}-${DEST_BUILD_ARCH}"
+
+done
+
+echo "Exit build hook"
 exit 0
