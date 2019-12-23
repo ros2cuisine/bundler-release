@@ -17,14 +17,14 @@ BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
 echo "DEBUG: ${VCSREF} and ${BUILD_DATE}"
 
-if [ ${DOCKER_TAG} == "latest" ]; then
+if [ ${DOCKER_TAG} == "eloquent-latest" ]; then
+    DEST_TAG="eloquent-latest"
+    SRC_TAG="eloquent-staged"
+
+elif [ ${DOCKER_TAG} == "latest" ]; then
     DEST_TAG="latest"
     SRC_TAG="staged"
-    BUILD_TAG="staged"
-elif [ ${DOCKER_TAG} == "dev" ]; then
-    DEST_TAG="dev"
-    SRC_TAG="testing"
-    BUILD_TAG="devbuild"
+
 else
     echo "not configured tag ${DOCKER_TAG}"
     exit 1
@@ -43,7 +43,7 @@ do
         SRC_NAME="amd64"
         DEST_ARCH=${DEST_BUILD_ARCH}
         DOCKER_PREFIX=""
-        echo "  - image: ${DEST_NAME}/${DEST_REPO}:${ROS_DISTRO}-${DEST_ARCH}-${DEST_TAG}" >> auto-docker-manifest.yaml
+        echo "  - image: ${DEST_NAME}/${DEST_REPO}:${DEST_ARCH}-${DEST_TAG}" >> auto-docker-manifest.yaml
         echo "    platform:" >> auto-docker-manifest.yaml
         echo "      architecture: ${DEST_ARCH}" >> auto-docker-manifest.yaml
         echo "      os: ${DEST_OS}" >> auto-docker-manifest.yaml
@@ -53,7 +53,7 @@ do
         SRC_NAME="arm32v7"
         DEST_ARCH="arm"
         DOCKERFILE_PREFIX="armhf."
-        echo "  - image: ${DEST_NAME}/${DEST_REPO}:${ROS_DISTRO}-${DEST_ARCH}-${DEST_TAG}" >> auto-docker-manifest.yaml
+        echo "  - image: ${DEST_NAME}/${DEST_REPO}:${DEST_ARCH}-${DEST_TAG}" >> auto-docker-manifest.yaml
         echo "    platform:" >> auto-docker-manifest.yaml
         echo "      architecture: ${DEST_ARCH}" >> auto-docker-manifest.yaml
         echo "      os: ${DEST_OS}" >> auto-docker-manifest.yaml
@@ -64,7 +64,7 @@ do
         SRC_NAME="arm64v8"
         DEST_ARCH="arm64"
         DOCKERFILE_PREFIX="aarch64."
-        echo "  - image: ${DEST_NAME}/${DEST_REPO}:${ROS_DISTRO}-${DEST_ARCH}-${DEST_TAG}" >> auto-docker-manifest.yaml
+        echo "  - image: ${DEST_NAME}/${DEST_REPO}:${DEST_ARCH}-${DEST_TAG}" >> auto-docker-manifest.yaml
         echo "    platform:" >> auto-docker-manifest.yaml
         echo "      architecture: ${DEST_ARCH}" >> auto-docker-manifest.yaml
         echo "      os: ${DEST_OS}" >> auto-docker-manifest.yaml
@@ -104,5 +104,6 @@ do
         --build-arg SRC_USER_NAME="${SRC_NAME}" \
         --tag "${DEST_REPO}:${ROS_DISTRO}-${DEST_BUILD_ARCH}-${SRC_TAG}" \
         .
+    echo "Pushing image"
     docker push "${DEST_REPO}:${ROS_DISTRO}-${DEST_BUILD_ARCH}-${SRC_TAG}"
 done
