@@ -1,24 +1,38 @@
 #!/bin/bash
 
 # Local test values
+#ROS_DISTRO=eloquent
+#TARGET_ARCHES="amd64"
+#DOCKER_TAG=latest
 
 # Environment
 SRC_NAME=ros2cuisine
-BUILD_TAG=staged
-SRC_TAG=staged
 DEST_REPO=bundler
 DEST_NAME="${SRC_NAME}"
 
-
-# Begin generating manifest file
-echo "image: ${SRC_NAME}/${IMAGE_NAME}:${DEST_TAG}" > auto-docker-manifest.yaml
-echo "manifests:" >> auto-docker-manifest.yaml
-
 # dynamic Values
+apt-get update && apt-get install git date -y -q
 VCS_REF="$(git rev-parse --short HEAD)"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-DEST_TAG="$(echo "$DOCKER_TAG" | cut -d '-' -f 2 )"
-ROS_DISTRO="$(echo "$DOCKER_TAG" | rev | cut -d '-' -f 2 | rev )"
+
+echo "DEBUG: ${VCSREF} and ${BUILD_DATE}"
+
+if [ ${DOCKER_TAG} == "latest" ]; then
+    DEST_TAG="latest"
+    SRC_TAG="staged"
+    BUILD_TAG="staged"
+elif [ ${DOCKER_TAG} == "dev" ]; then
+    DEST_TAG="dev"
+    SRC_TAG="testing"
+    BUILD_TAG="devbuild"
+else
+    echo "not configured tag ${DOCKER_TAG}"
+    exit 1
+fi
+
+# Begin generating manifest file
+echo "image: ${SRC_NAME}/${DEST_REPO}:${DEST_TAG}" > auto-docker-manifest.yaml
+echo "manifests:" >> auto-docker-manifest.yaml
 
 # Cycle trough the the arches
 for DEST_BUILD_ARCH in ${DEST_ARCHES}
@@ -90,5 +104,5 @@ do
         --build-arg SRC_USER_NAME="${SRC_NAME}" \
         --tag "${DEST_REPO}:${ROS_DISTRO}-${DEST_BUILD_ARCH}-${SRC_TAG}" \
         .
-    #docker push "${DEST_REPO}:${ROS_DISTRO}-${DEST_BUILD_ARCH}-${SRC_TAG}"
+    docker push "${DEST_REPO}:${ROS_DISTRO}-${DEST_BUILD_ARCH}-${SRC_TAG}"
 done
