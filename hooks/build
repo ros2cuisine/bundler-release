@@ -60,7 +60,7 @@ do
 
     # arch not found
     else
-            echo "The buildarch is not referenced here. DEST_ARCH not set."
+            echo "DEBUG: The buildarch is not referenced here. DEST_ARCH not set."
     fi
 
     DOCKERFILE="${DOCKERFILE_PREFIX}Dockerfile"
