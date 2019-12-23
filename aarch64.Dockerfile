@@ -43,11 +43,12 @@ ENV DEBIAN_FRONTEND noninteractive
 #    && rm -rf /var/lib/apt/lists/*
 
 # install packages
-RUN apt-get update && apt-get install -q -y \
-    dirmngr \
-    gnupg2 \
-    python3-pip \
-    tzdata \
+RUN apt-get update \
+    && apt-get install -q -y \
+        dirmngr \
+        gnupg2 \
+        python3-pip \
+        tzdata \
     && rm -rf /var/lib/apt/lists/*
 
 # setup keys
