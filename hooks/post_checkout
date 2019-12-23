@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SRC_ARCH="amd64"
-DEST_ARCHES="amd64 armhf arm64v8"
+DEST_ARCHES="amd64 arm32v7 arm64v8"
 
 # Cycle trough the the arches
 for DEST_BUILD_ARCH in ${DEST_ARCHES}
@@ -9,6 +9,7 @@ do
     BUILD_ARCH=${DEST_BUILD_ARCH}
     [ "${BUILD_ARCH}" == "amd64" ] && \
     { echo 'qemu-user-static: Download not required for amd64'; continue; }
+    echo "Setting QEMU USER STATIC"
     QEMU_USER_STATIC_ARCH=$([ "${BUILD_ARCH}" == "armhf" ] && echo "${BUILD_ARCH::-2}" || echo "${BUILD_ARCH}")
     QEMU_USER_STATIC_DOWNLOAD_URL="https://github.com/multiarch/qemu-user-static/releases/download"
     QEMU_USER_STATIC_LATEST_TAG=$(curl -s https://api.github.com/repos/multiarch/qemu-user-static/tags \
