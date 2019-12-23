@@ -64,8 +64,8 @@ do
     DOCKERFILE="${DOCKERFILE_PREFIX}Dockerfile"
     # Build the docker image
     docker build \
-        --push
         --compress \
+        --push \
         --pull \
         --label description="The Bundle image that is the source for other images" \
         --label docker.cmd="docker run -d ros2cuisine/bundler" \
@@ -88,6 +88,7 @@ do
         --build-arg BUILD_REPO=ubuntu \
         --build-arg BUILD_VERSION=bionic \
         --build-arg SRC_USER_NAME="${SRC_NAME}" \
-        --tag "${DEST_REPO}:${ROS_DISTRO}-${DEST_BUILD_ARCH}-${BUILD_TAG}" \
+        --tag "${DEST_REPO}:${ROS_DISTRO}-${DEST_BUILD_ARCH}-${SRC_TAG}" \
         .
+    #docker push "${DEST_REPO}:${ROS_DISTRO}-${DEST_BUILD_ARCH}-${SRC_TAG}"
 done
