@@ -14,7 +14,7 @@ DEST_TAG="$(echo "$DOCKER_TAG" | cut -d '-' -f 2 )"
 VCS_REF="$(git rev-parse --short HEAD)"
 
 # Begin generating manifest file
-echo "image: ${SRC_NAME}/${IMAGE_NAME}" > auto-docker-manifest.yaml
+echo "image: ${SRC_NAME}/${IMAGE_NAME}:${DEST_TAG}" > auto-docker-manifest.yaml
 echo "manifests:" >> auto-docker-manifest.yaml
 
 # Cycle trough the the arches

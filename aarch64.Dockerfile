@@ -35,18 +35,19 @@ ENV LC_ALL C.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
 
 # setup timezone
-RUN apt-get update \
+#RUN apt-get update \
     #echo 'Etc/UTC' > /etc/timezone \
     #&& ln -s -f /usr/share/zoneinfo/Etc/UTC /etc/localtime \
     #&& apt-get update \
-    && apt-get install -q -y tzdata \
-    && rm -rf /var/lib/apt/lists/*
+#    && apt-get install -q -y tzdata \
+#    && rm -rf /var/lib/apt/lists/*
 
 # install packages
 RUN apt-get update && apt-get install -q -y \
     dirmngr \
     gnupg2 \
     python3-pip \
+    tzdata \
     && rm -rf /var/lib/apt/lists/*
 
 # setup keys
