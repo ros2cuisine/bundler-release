@@ -1,11 +1,4 @@
 #!/bin/bash
-# Get the manifest-tool
-
-apt-get update && apt-get install wget -y -q
-
-wget -cO - https://github.com/estesp/manifest-tool/releases/download/v1.0.0/manifest-tool-linux-arm64 . > manifest-tool
-
-chmod +x ./manifest-tool
 
 # Environment
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
@@ -43,7 +36,7 @@ do
         DOCKERFILE_PREFIX="armhf"
         echo "  - image: ${DEST_NAME}/${DEST_REPO}:${ROS_DISTRO}-${DEST_ARCH}-${DEST_TAG}" >> auto-docker-manifest.yaml
         echo "    platform:" >> auto-docker-manifest.yaml
-        echo "      architecture: ${DEST_ARCH}" > auto-docker-manifest.yaml
+        echo "      architecture: ${DEST_ARCH}" >> auto-docker-manifest.yaml
         echo "      os: ${DEST_OS}" >> auto-docker-manifest.yaml
         echo "      variant: v7" >> auto-docker-manifest.yaml
 
@@ -68,7 +61,6 @@ do
     docker build \
         --compress \
         --pull \
-        # Labels
         --label description="The Bundle image that is the source for other images" \
         --label docker.cmd="docker run -d ros2cuisine/bundler" \
         --label maintainer="cuisine@ichbestimmtnicht.de" \
@@ -81,7 +73,6 @@ do
         --label vcs-ref="${VCS_REF}" \
         --label schema-version="1.0.0-rc1" \
         --file "${DOCKERFILE_PREFIX}.Dockerfile" \
-        # Build Arguments
         --build-arg BUILD_DATE=${BUILD_DATE} \
         --build-arg VCS_REF="${VCS_REF}" \
         --build-arg ROS_DISTRO=eloquent \
