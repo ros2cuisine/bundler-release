@@ -35,9 +35,10 @@ ENV LC_ALL C.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
 
 # setup timezone
-RUN echo 'Etc/UTC' > /etc/timezone \
+RUN apt-get update \
+    #echo 'Etc/UTC' > /etc/timezone \
     #&& ln -s -f /usr/share/zoneinfo/Etc/UTC /etc/localtime \
-    && apt-get update \
+    #&& apt-get update \
     && apt-get install -q -y tzdata \
     && rm -rf /var/lib/apt/lists/*
 
