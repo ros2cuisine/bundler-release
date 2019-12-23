@@ -11,7 +11,7 @@ DEST_REPO=bundler
 DEST_NAME="${SRC_NAME}"
 
 # dynamic Values
-apt-get update && apt-get install git date -y -q
+apt-get update && apt-get install git -y -q
 VCS_REF="$(git rev-parse --short HEAD)"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
@@ -28,7 +28,6 @@ elif [ ${DOCKER_TAG} == "latest" ]; then
 else
     echo "not configured tag ${DOCKER_TAG}"
     exit 1
-fi
 
 # Begin generating manifest file
 echo "image: ${SRC_NAME}/${DEST_REPO}:${DEST_TAG}" > auto-docker-manifest.yaml
@@ -73,13 +72,12 @@ do
     # arch not found
     else
         echo "DEBUG: The buildarch is not referenced here. DEST_ARCH not set."
-    fi
+        exit 1
 
     DOCKERFILE="${DOCKERFILE_PREFIX}Dockerfile"
     # Build the docker image
     docker build \
         --compress \
-        --push \
         --pull \
         --label description="The Bundle image that is the source for other images" \
         --label docker.cmd="docker run -d ros2cuisine/bundler" \
