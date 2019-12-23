@@ -68,17 +68,4 @@ ENTRYPOINT [ "fwatchdog" ]
 
 # Use bash as shell
 CMD ["/bin/bash"]
-
-# Add your labels
-LABEL org.label-schema.name="${IMAGE_NAME}-${VCS_REF}" \
-      org.label-schema.description="Your new description" \
-      org.label-schema.build-date=$BUILD_DATE \
-      org.label-schema.vcs-url="https://hub.docker.com/ros2cuisine/example" \
-      org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.schema-version="1.0.0-rc1" \
-      org.label-schema.maintainer="cuisine-dev@ichbestimmtnicht.de" \
-      org.label-schema.url="https://github.com/ros2cuisine/builder-release/" \
-      org.label-schema.vendor="ichbestimmtnicht" \
-      org.label-schema.version=$BUILD_VERSION \
-      org.label-schema.docker.cmd="docker run -d ros2cuisine/builder"
 ```

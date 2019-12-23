@@ -25,7 +25,7 @@ else
     exit 1
 fi
 # Begin generating manifest file
-echo "image: ${SRC_NAME}/${DEST_REPO}:${DEST_TAG}" > auto-docker-manifest.yaml
+echo "image: ${DOCKERHUB_NAME}/${DEST_REPO}:${DEST_TAG}" > auto-docker-manifest.yaml
 echo "manifests:" >> auto-docker-manifest.yaml
 
 echo "TEST"
@@ -56,7 +56,7 @@ echo "DEBUG: Begin Cycle ${DEST_BUILD_ARCH}"
         echo "      variant: v7" >> auto-docker-manifest.yaml
 
     # Set arm64
-    elif [ ${DEST_BUILD_ARCH} == "arm64" ]; then
+    elif [ ${DEST_BUILD_ARCH} == "arm64v8" ]; then
         SRC_NAME="arm64v8"
         DEST_ARCH="arm64"
         DOCKERFILE_PREFIX="aarch64."
@@ -99,7 +99,7 @@ echo "DEBUG: Begin Cycle ${DEST_BUILD_ARCH}"
         --build-arg BUILD_REPO=ubuntu \
         --build-arg BUILD_VERSION=bionic \
         --build-arg SRC_USER_NAME="${SRC_NAME}" \
-        --tag "${DEST_REPO}:${SRC_TAG}-${DEST_BUILD_ARCH}" \
+        --tag "${DOCKERHUB_NAME}/${DEST_REPO}:${SRC_TAG}-${DEST_BUILD_ARCH}" \
         .
     echo "Pushing image"
     docker push "${DOCKERHUB_NAME}/${DEST_REPO}:${SRC_TAG}-${DEST_BUILD_ARCH}"
