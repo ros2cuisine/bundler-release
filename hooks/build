@@ -104,4 +104,5 @@ do
         .
     echo "Pushing image"
     docker push "${DEST_REPO}:${ROS_DISTRO}-${DEST_BUILD_ARCH}-${SRC_TAG}"
-done
+fi
+exit 0
