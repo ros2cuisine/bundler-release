@@ -5,7 +5,6 @@
 # Environment
 DOCKERHUB_NAME=ros2cuisine
 DEST_REPO=bundler
-DEST_NAME="${SRC_NAME}"
 
 # dynamic Values
 apt-get update && apt-get install git -y -q
@@ -39,7 +38,7 @@ echo "DEBUG: Begin Cycle ${DEST_BUILD_ARCH}"
         SRC_NAME="amd64"
         DEST_ARCH=${DEST_BUILD_ARCH}
         DOCKER_PREFIX=""
-        echo "  - image: ${DEST_NAME}/${DEST_REPO}:${DEST_ARCH}-${DEST_TAG}" >> auto-docker-manifest.yaml
+        echo "  - image: ${DOCKERHUB_NAME}/${DEST_REPO}:${SRC_TAG}-${DEST_BUILD_ARCH}" >> auto-docker-manifest.yaml
         echo "    platform:" >> auto-docker-manifest.yaml
         echo "      architecture: ${DEST_ARCH}" >> auto-docker-manifest.yaml
         echo "      os: ${DEST_OS}" >> auto-docker-manifest.yaml
@@ -49,7 +48,7 @@ echo "DEBUG: Begin Cycle ${DEST_BUILD_ARCH}"
         SRC_NAME="arm32v7"
         DEST_ARCH="arm"
         DOCKERFILE_PREFIX="armhf."
-        echo "  - image: ${DEST_NAME}/${DEST_REPO}:${DEST_ARCH}-${DEST_TAG}" >> auto-docker-manifest.yaml
+        echo "  - image: ${DOCKERHUB_NAME}/${DEST_REPO}:${SRC_TAG}-${DEST_BUILD_ARCH}" >> auto-docker-manifest.yaml
         echo "    platform:" >> auto-docker-manifest.yaml
         echo "      architecture: ${DEST_ARCH}" >> auto-docker-manifest.yaml
         echo "      os: ${DEST_OS}" >> auto-docker-manifest.yaml
@@ -60,7 +59,7 @@ echo "DEBUG: Begin Cycle ${DEST_BUILD_ARCH}"
         SRC_NAME="arm64v8"
         DEST_ARCH="arm64"
         DOCKERFILE_PREFIX="aarch64."
-        echo "  - image: ${DEST_NAME}/${DEST_REPO}:${DEST_ARCH}-${DEST_TAG}" >> auto-docker-manifest.yaml
+        echo "  - image: ${DOCKERHUB_NAME}/${DEST_REPO}:${SRC_TAG}-${DEST_BUILD_ARCH}" >> auto-docker-manifest.yaml
         echo "    platform:" >> auto-docker-manifest.yaml
         echo "      architecture: ${DEST_ARCH}" >> auto-docker-manifest.yaml
         echo "      os: ${DEST_OS}" >> auto-docker-manifest.yaml
@@ -101,9 +100,6 @@ echo "DEBUG: Begin Cycle ${DEST_BUILD_ARCH}"
         --build-arg SRC_USER_NAME="${SRC_NAME}" \
         --tag "${DOCKERHUB_NAME}/${DEST_REPO}:${SRC_TAG}-${DEST_BUILD_ARCH}" \
         .
-    echo "Pushing image"
-    docker push "${DOCKERHUB_NAME}/${DEST_REPO}:${SRC_TAG}-${DEST_BUILD_ARCH}"
-
 done
 
 echo "Exit build hook"
