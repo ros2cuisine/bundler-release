@@ -1,18 +1,17 @@
 # Setup variables
-ARG SRC_USER_NAME=amd64
-ARG BUILD_REPO=ubuntu
-ARG BUILD_VERSION=bionic
-ARG ROS_DISTRO=eloquent
+ARG SRC_NAME
+ARG SRC_REPO
+ARG SRC_TAG
 
 # Pull image
-FROM ${SRC_USER_NAME}/${BUILD_REPO}:${BUILD_VERSION}
+FROM ${SRC_NAME}/${SRC_REPO}:${SRC_TAG}
 
-# Setup environment
-ARG ROS_DISTRO=eloquent
-ARG SRC_USER_NAME
-ARG BUILD_REPO=ubuntu
-# dynamic
+# Setup build arguments
+ARG ROS_DISTRO
+
+# setup environments
 ENV ROS_DISTRO ${ROS_DISTRO}
+
 # static
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8

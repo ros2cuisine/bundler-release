@@ -8,7 +8,8 @@ cat auto-docker-manifest.yaml
 wget -cO - https://github.com/estesp/manifest-tool/releases/download/v1.0.0/manifest-tool-linux-amd64 > manifest-tool
 
 chmod +x manifest-tool
-# Push the docker image
+
+# Push the manifest
 ./manifest-tool push from-spec auto-docker-manifest.yaml
 rm -f auto-docker-manifest.yaml
 
