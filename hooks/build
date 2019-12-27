@@ -90,6 +90,14 @@ echo "DEBUG: Begin Cycle ${DEST_BUILD_ARCH}"
         .
 done
 
+echo "DEBUG: Push the docker images"
+
+# Cycle trough the the arches again and push the images
+for DEST_BUILD_ARCH in ${DEST_ARCHES}
+do
+    docker push ${DOCKERHUB_NAME}/${DEST_REPO}:${DEST_TAG}-${DEST_BUILD_ARCH}
+done
+
 echo "Exit build hook"
 
 exit 0
