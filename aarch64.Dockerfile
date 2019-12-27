@@ -54,7 +54,7 @@ RUN apt-get update && apt-get install -q -y \
     && rm -rf /var/lib/apt/lists/*
 
 # setup keys
-RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add - \
+RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - \
     && wget http://packages.osrfoundation.org/gazebo.key \
     && apt-key add gazebo.key \
     && rm -rf gazebo.key \

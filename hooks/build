@@ -88,13 +88,7 @@ echo "DEBUG: Begin Cycle ${DEST_BUILD_ARCH}"
         --build-arg SRC_NAME="${SRC_NAME}" \
         --tag "${DOCKERHUB_NAME}/${DEST_REPO}:${DEST_TAG}-${DEST_BUILD_ARCH}" \
         .
-done
-
-echo "DEBUG: Push the docker images"
-
-# Cycle trough the the arches again and push the images
-for DEST_BUILD_ARCH in ${DEST_ARCHES}
-do
+    echo "DEBUG: Push the docker image ${DEST_BUILD_ARCH}" 
     docker push ${DOCKERHUB_NAME}/${DEST_REPO}:${DEST_TAG}-${DEST_BUILD_ARCH}
 done
 
