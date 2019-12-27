@@ -34,26 +34,27 @@ ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
 
-# setup timezone
-RUN echo 'Etc/UTC' > /etc/timezone && \
-    ln -s -f /usr/share/zoneinfo/Etc/UTC /etc/localtime \
-    && apt-get update \
-    && apt-get install -q -y tzdata \
-    && rm -rf /var/lib/apt/lists/*
-
 # install packages
 RUN apt-get update && apt-get install -q -y \
-    dirmngr \
-    gnupg2 \
-    python3-pip \
+        dirmngr \
+        gnupg2 \
+        python3-pip \
+        wget \
+        curl \
+        gnupg2 \
+        lsb-release \
     && rm -rf /var/lib/apt/lists/*
 
 # setup keys
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add - \
+    && wget http://packages.osrfoundation.org/gazebo.key \
+    && apt-key add gazebo.key \
+    && rm -rf gazebo.key \
+    && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 \
+    && echo "deb http://packages.ros.org/ros2/ubuntu bionic main" > /etc/apt/sources.list.d/ros2-latest.list 
 
 # install bootstrap tools
-RUN echo "deb http://packages.ros.org/ros2/ubuntu bionic main" > /etc/apt/sources.list.d/ros2-latest.list \
-    && apt-get update \
+RUN apt-get update \
     && apt-get upgrade -y -q \
     && apt-get install --no-install-recommends -y \
         git \

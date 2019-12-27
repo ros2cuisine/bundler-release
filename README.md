@@ -1,6 +1,6 @@
 # The Bundle image as source for other images
 
-## Important Note for Devs: Don't use any apt-get upgrade or other upgrade commands after this point. Head to the issue section to have a look whats holding the build back. Tip: Try to user a different [tag](https://hub.docker.com/repository/docker/ros2cuisine/bundler/tags)
+## Important Note for Devs: Don't use any apt-get upgrade or other upgrade commands after this point. Head to the [issue](https://gitlab.com/ros2cuisine/bundler/issues) section to have a look whats holding the build back. Tip: Try to use a different [tag](https://hub.docker.com/repository/docker/ros2cuisine/bundler/tags)
 
 ### Instructions
 
@@ -19,16 +19,17 @@ docker pull ros2cuisine/bundler:eloquent-latest
 FROM openfaas/classic-watchdog:0.18.6 as watchdog
 
 ARG GITLAB_USERNAME=ros2cuisine
-ARG TARGET_ARCH=md64
+ARG TARGET_ARCH=amd64
 ARG ROS_DISTRO=eloquent
-ARG TAG=latest
+ARG TAG=eloquent-latest
 
-FROM ${GITLAB_USERNAME}/builder:${ROS_DISTRO}-${TARGET_ARCH}-${TAG} as builder
 # Build instructions
+FROM ${GITLAB_USERNAME}/builder:${ROS_DISTRO}-${TARGET_ARCH}-${TAG} as builder
 
 # Have a look at https://gitlab.com/ros2cuisine/builder to learn moore about building instructions
 
 # End of builder image
+
 # Start at the bundler image
 FROM ${GITLAB_USERNAME}/bundler:${ROS_DISTRO}-${TARGET_ARCH}-${TAG} as bundle
 
@@ -38,9 +39,9 @@ COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 # Copy the bundle
 COPY --from=builder /cuisine/workspaces/bundle/output.tar output/
 
-RUN apk update \
+RUN apt update \
     # Add Bash for debugging purposes 
-    && apk add \
+    && apt install -y -q \
         bash \
         # Now your are able to start the container with -i terminal flag
     # Change into the dir with output.tar
