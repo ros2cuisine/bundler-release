@@ -7,7 +7,7 @@
 #### Pull the latest image
 
 ```bash
-docker pull ros2cuisine/bundler:eloquent-latest
+docker pull ros2cuisine/bundler
 ```
 
 #### Example Dockerfile instructions for bundling
@@ -18,20 +18,23 @@ docker pull ros2cuisine/bundler:eloquent-latest
 
 FROM openfaas/classic-watchdog:0.18.6 as watchdog
 
-ARG GITLAB_USERNAME=ros2cuisine
-ARG TARGET_ARCH=amd64
-ARG ROS_DISTRO=eloquent
-ARG TAG=eloquent-latest
-
 # Build instructions
-FROM ${GITLAB_USERNAME}/builder:${ROS_DISTRO}-${TARGET_ARCH}-${TAG} as builder
+FROM ros2cuisine/builder as builder
+
+RUN apt update \
+    # Source ros
+    && . /ros_entrypoint.sh \
+    # Build the workspace
+    && colcon build \
+    # Begin Bundling
+    && colcon bundle
 
 # Have a look at https://gitlab.com/ros2cuisine/builder to learn moore about building instructions
 
 # End of builder image
 
 # Start at the bundler image
-FROM ${GITLAB_USERNAME}/bundler:${ROS_DISTRO}-${TARGET_ARCH}-${TAG} as bundle
+FROM ros2cuisine/bundler as bundle
 
 # Copy watchdog in
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
@@ -40,10 +43,6 @@ COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 COPY --from=builder /cuisine/workspaces/bundle/output.tar output/
 
 RUN apt update \
-    # Add Bash for debugging purposes 
-    && apt install -y -q \
-        bash \
-        # Now your are able to start the container with -i terminal flag
     # Change into the dir with output.tar
     && cd /cuisine/workspaces/output/ \
     # unfold tar
@@ -69,4 +68,10 @@ ENTRYPOINT [ "fwatchdog" ]
 
 # Use bash as shell
 CMD ["/bin/bash"]
+```
+
+Build the image local
+
+```bash
+docker build . -t appname:localbuild
 ```

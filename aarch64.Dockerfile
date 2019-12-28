@@ -1,10 +1,12 @@
 # Setup variables
-ARG BUILD_USER_NAME=arm64v8
-ARG BUILD_REPO=ubuntu
-ARG BUILD_VERSION=bionic
-ARG DOCKERHUB_NAME=ros2cuisine
-ARG IMAGE_NAME
-ARG VCS_REF
+ARG SRC_NAME
+ARG SRC_REPO
+ARG SRC_TAG
+
+# Build context
+FROM scratch as buildcontext
+
+COPY ros_entrypoint.sh .
 
 # Setup qemu
 FROM alpine AS qemu
@@ -18,8 +20,8 @@ ARG BUILD_USER_NAME=arm64v8
 ARG BUILD_REPO=ubuntu
 ARG BUILD_VERSION=bionic
 
-# Pull the image
-FROM ${BUILD_USER_NAME}/${BUILD_REPO}:${BUILD_VERSION} as bundle
+# Pull image
+FROM ${SRC_NAME}/${SRC_REPO}:${SRC_TAG} as bundle
 
 COPY --from=qemu qemu-aarch64-static /usr/bin
 
@@ -91,7 +93,7 @@ RUN pip3 install -U \
     && mkdir -p /workspaces/cuisine
 
 # setup entrypoint
-ADD https://raw.githubusercontent.com/ros2cuisine/bundler-release/master/ros_entrypoint.sh /
+COPY --from=buildcontext ros_entrypoint.sh /
 
 # Choose the directory for builds
 WORKDIR /workspaces/cuisine

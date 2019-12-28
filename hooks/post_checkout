@@ -1,8 +1,5 @@
 #!/bin/bash
 
-SRC_ARCH="amd64"
-DEST_ARCHES="amd64 arm32v7 arm64v8"
-
 # Cycle trough the the arches
 for DEST_BUILD_ARCH in ${DEST_ARCHES}
 do

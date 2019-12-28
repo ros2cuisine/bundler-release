@@ -3,8 +3,13 @@ ARG SRC_NAME
 ARG SRC_REPO
 ARG SRC_TAG
 
+# Build context
+FROM scratch as buildcontext
+
+COPY ros_entrypoint.sh .
+
 # Pull image
-FROM ${SRC_NAME}/${SRC_REPO}:${SRC_TAG}
+FROM ${SRC_NAME}/${SRC_REPO}:${SRC_TAG} as bundle
 
 # Setup build arguments
 ARG ROS_DISTRO
@@ -73,7 +78,7 @@ RUN pip3 install -U \
     && mkdir -p /workspaces/cuisine
 
 # setup entrypoint
-ADD https://raw.githubusercontent.com/ros2cuisine/bundler-release/master/ros_entrypoint.sh /
+COPY --from=buildcontext ros_entrypoint.sh /
 
 # Choose the directory for builds
 WORKDIR /workspaces/cuisine
