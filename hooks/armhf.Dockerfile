@@ -1,3 +1,9 @@
+# Setup variables
+ARG SRC_NAME
+ARG SRC_REPO
+ARG SRC_TAG
+ARG ROS_DISTRO
+
 # Build context
 FROM scratch as buildcontext
 
@@ -79,7 +85,7 @@ RUN pip3 install -U \
     && mkdir -p /workspaces/cuisine
 
 # setup entrypoint
-# COPY --from=buildcontext ros_entrypoint.sh /
+COPY --from=buildcontext ros_entrypoint.sh /
 
 # Choose the directory for builds
 WORKDIR /workspaces/cuisine

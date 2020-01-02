@@ -1,3 +1,9 @@
+# Setup variables
+ARG SRC_NAME
+ARG SRC_REPO
+ARG SRC_TAG
+ARG ROS_DISTRO
+
 # Build context
 FROM scratch as buildcontext
 
@@ -7,6 +13,7 @@ COPY ros_entrypoint.sh .
 ARG SRC_NAME
 ARG SRC_REPO
 ARG SRC_TAG
+
 # Pull image
 FROM ${SRC_NAME}/${SRC_REPO}:${SRC_TAG} as bundle
 
@@ -58,7 +65,7 @@ RUN apt-get update \
         python3-vcstool \
     && rm -rf /var/lib/apt/lists/*
 
-# bootstrap rosdep
+# bootstrap rosdepsudo apt update && sudo apt autoremove --purge -q -y && sudo apt autoclean -y -q
 RUN rosdep init \
     && rosdep update
 
@@ -77,7 +84,7 @@ RUN pip3 install -U \
     && mkdir -p /workspaces/cuisine
 
 # setup entrypoint
-# COPY --from=buildcontext ros_entrypoint.sh /
+COPY --from=buildcontext ros_entrypoint.sh /
 
 # Choose the directory for builds
 WORKDIR /workspaces/cuisine
