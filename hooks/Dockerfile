@@ -1,8 +1,8 @@
 # Setup variables
-ARG SRC_NAME
-ARG SRC_REPO
-ARG SRC_TAG
-ARG ROS_DISTRO
+ARG SRC_NAME=amd64
+ARG SRC_REPO=ubuntu
+ARG SRC_TAG=bionic
+ARG ROS_DISTRO=eloquent
 
 # Build context
 FROM scratch as buildcontext
