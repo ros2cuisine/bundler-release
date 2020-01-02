@@ -1,8 +1,3 @@
-# Setup variables
-ARG SRC_NAME
-ARG SRC_REPO
-ARG SRC_TAG
-
 # Build context
 FROM scratch as buildcontext
 
@@ -16,9 +11,10 @@ ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/
 
 RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 
-ARG SRC_USER_NAME=arm32v7
-ARG BUILD_REPO=ubuntu
-ARG BUILD_VERSION=bionic
+# Setup variables
+ARG SRC_NAME
+ARG SRC_REPO
+ARG SRC_TAG
 
 # Pull image
 FROM ${SRC_NAME}/${SRC_REPO}:${SRC_TAG} as bundle
@@ -26,9 +22,7 @@ FROM ${SRC_NAME}/${SRC_REPO}:${SRC_TAG} as bundle
 COPY --from=qemu qemu-arm-static /usr/bin
 
 # Setup environment
-ARG ROS_DISTRO=eloquent
-ARG SRC_USER_NAME
-ARG BUILD_REPO=ubuntu
+ARG ROS_DISTRO
 # dynamic
 ENV ROS_DISTRO ${ROS_DISTRO}
 # static
@@ -85,12 +79,9 @@ RUN pip3 install -U \
     && mkdir -p /workspaces/cuisine
 
 # setup entrypoint
-COPY --from=buildcontext ros_entrypoint.sh /
+# COPY --from=buildcontext ros_entrypoint.sh /
 
 # Choose the directory for builds
 WORKDIR /workspaces/cuisine
-
-# Finishing the image
-ENTRYPOINT ["/ros_entrypoint.sh"]
 
 CMD ["bash"]
