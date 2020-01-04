@@ -1,21 +1,14 @@
-# Setup variables
-ARG SRC_NAME
-ARG SRC_REPO
-ARG SRC_TAG
-ARG ROS_DISTRO
+# Dummy Dockerfile because hooks aren't working with a custom Filename
+# Have a look into the hooks folder to see them per arch
+# https://gitlab.com/ros2cuisine/templates/bundler/tree/master/hooks/
 
 # Build context
 FROM scratch as buildcontext
 
 COPY ros_entrypoint.sh .
 
-# Setup variables
-ARG SRC_NAME
-ARG SRC_REPO
-ARG SRC_TAG
-
 # Pull image
-FROM ${SRC_NAME}/${SRC_REPO}:${SRC_TAG} as bundle
+FROM ubuntu:bionic as bundle
 
 # Setup build arguments
 ARG ROS_DISTRO

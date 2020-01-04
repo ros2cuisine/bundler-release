@@ -1,6 +1,6 @@
 # The Bundle image as source for other images
 
-## Important Note for Devs: Don't use any apt-get upgrade or other upgrade commands after this point. Head to the [issue](https://gitlab.com/ros2cuisine/bundler/issues) section to have a look whats holding the build back. Tip: Try to use a different [tag](https://hub.docker.com/repository/docker/ros2cuisine/bundler/tags)
+## Important Note for Devs: Don't use any apt-get upgrade or other upgrade commands after this point. Head to the [issue](https://gitlab.com/ros2cuisine/templates/bundler/issues) section to have a look whats holding the build back. Tip: Try to use a different [tag](https://hub.docker.com/repository/docker/ros2cuisine/bundler/tags)
 
 ### Instructions
 
@@ -29,7 +29,7 @@ RUN apt update \
     # Begin Bundling
     && colcon bundle
 
-# Have a look at https://gitlab.com/ros2cuisine/builder to learn moore about building instructions
+# Have a look at https://gitlab.com/ros2cuisine/templates/builder to learn moore about building instructions
 
 # End of builder image
 
