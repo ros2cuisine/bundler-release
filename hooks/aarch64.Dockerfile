@@ -28,9 +28,7 @@ FROM ${SRC_NAME}/${SRC_REPO}:${SRC_TAG} as bundle
 COPY --from=qemu qemu-aarch64-static /usr/bin
 
 # Setup environment
-ARG ROS_DISTRO=eloquent
-ARG SRC_USER_NAME
-ARG BUILD_REPO=ubuntu
+ARG ROS_DISTRO
 # dynamic
 ENV ROS_DISTRO ${ROS_DISTRO}
 # static
