@@ -1,3 +1,9 @@
 #!/bin/bash
-echo "DEBUG: Pre build"
+
+echo "SCRIPT_INFO: initialise mutliarch"
+
 docker run --rm --privileged multiarch/qemu-user-static:register --reset
+
+echo "SCRIPT_INFO: Exiting pre_build"
+
+exit 0
