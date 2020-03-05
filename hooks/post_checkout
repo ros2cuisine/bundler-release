@@ -1,7 +1,9 @@
 #!/bin/bash
-apt-get update && apt-get install curl git bash -y -q
+apt-get update && apt-get install curl wget git bash -y -q
 
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/ichbestimmtnicht/docker-autobuild-release/tree/master/hooks/post_checkout.sh)"
+wget https://raw.githubusercontent.com/ichbestimmtnicht/docker-autobuild-release/master/hooks/post_checkout
+
+bash post_checkout
 
 # Old Configuration
 # Cycle trough the the arches

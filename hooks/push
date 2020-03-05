@@ -1,6 +1,7 @@
 #!/bin/bash
+wget wget https://raw.githubusercontent.com/ichbestimmtnicht/docker-autobuild-release/master/hooks/push
 
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/ichbestimmtnicht/docker-autobuild-release/tree/master/hooks/push.sh)"
+bash push
 
 # Old configuration
 #echo "Disable standardpush"
