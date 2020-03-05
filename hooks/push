@@ -2,20 +2,3 @@
 wget https://raw.githubusercontent.com/ichbestimmtnicht/docker-autobuild-release/master/hooks/push
 
 bash push
-
-# Old configuration
-#echo "Disable standardpush"
-#apt-get update && apt-get install wget -y -q
-
-#cat auto-docker-manifest.yaml
-
-# Get the manifest-tool
-#wget -cO - https://github.com/estesp/manifest-tool/releases/download/v1.0.0/manifest-tool-linux-amd64 > manifest-tool
-
-#chmod +x manifest-tool
-
-# Push the manifest
-#./manifest-tool push from-spec auto-docker-manifest.yaml
-#rm -f auto-docker-manifest.yaml
-
-# Push the completed tag

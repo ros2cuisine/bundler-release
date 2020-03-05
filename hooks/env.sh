@@ -14,7 +14,7 @@
 # Multi entry variables
 # LABEL_ only: Use a double underscore __ for an hyphen -
 # LABEL_
-LABEL_DESCRIPTION="Description not provided"
+LABEL_DESCRIPTION="ROS2 requirements as starting image for ROS2 Cuisine"
 # You find 6 moore standard labels like maintainer and vendor within the optional section
 
 # BUILD_ARG_
