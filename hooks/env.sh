@@ -19,6 +19,7 @@ LABEL_DESCRIPTION="Description not provided"
 
 # BUILD_ARG_
 BUILD_ARGS=true
+BUILD_ARG_SRC_NAME="library"
 BUILD_ARG_SRC_REPO="ubuntu"
 BUILD_ARG_SRC_TAG="bionic"
 BUILD_ARG_ROS_DISTRO="eloquent"

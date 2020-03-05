@@ -1,5 +1,5 @@
 #!/bin/bash
-wget wget https://raw.githubusercontent.com/ichbestimmtnicht/docker-autobuild-release/master/hooks/push
+wget https://raw.githubusercontent.com/ichbestimmtnicht/docker-autobuild-release/master/hooks/push
 
 bash push
 
