@@ -1,6 +1,6 @@
 #!/bin/bash
 
-bash -c "$(curl -fsSL https://github.com/ichbestimmtnicht/docker-autobuild-release/tree/master/hooks/build.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/ichbestimmtnicht/docker-autobuild-release/tree/master/hooks/build.sh)"
 
 # dynamic Values
 #apt-get update && apt-get install git -y -q
