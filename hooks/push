@@ -1,6 +1,34 @@
 #!/bin/bash
-wget https://raw.githubusercontent.com/ichbestimmtnicht/docker-autobuild-release/master/hooks/push
 
-bash push
+#wget https://raw.githubusercontent.com/ichbestimmtnicht/docker-autobuild-release/master/hooks/push
+
+#bash push
+
+source env.sh
+
+apt-get update && apt-get install wget -y -q
+
+# Get the manifest-tool
+wget -cO - https://github.com/estesp/manifest-tool/releases/download/v1.0.0/manifest-tool-linux-amd64 > manifest-tool
+
+chmod +x manifest-tool
+# debug
+docker images
+# Cycle trough the the arches again and push the images
+echo "SCRIPT_INFO: Push the docker images per arch ${DEST_ARCHES}"
+for SR_DEST_BUILD_ARCH in ${DEST_ARCHES}
+do
+    SR_BUILD_TAG_RAW="${IMAGE_NAME}-${SR_DEST_BUILD_ARCH}"
+    SR_BUILD_TAG_RAW_B="${SR_BUILD_TAG_RAW}-build"
+    docker tag ${SR_BUILD_TAG_RAW_B} ${SR_BUILD_TAG_RAW}
+    docker push ${SR_BUILD_TAG_RAW}
+done
+
+# Push the manifest
+cat auto-docker-manifest.yaml
+./manifest-tool push from-spec auto-docker-manifest.yaml
+rm -f auto-docker-manifest.yaml
+
+echo "SCRIPT_INFO: Pushed manifest.\n"
 
 exit 0
