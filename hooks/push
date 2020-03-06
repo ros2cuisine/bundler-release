@@ -1,6 +1,5 @@
 #!/bin/bash
+
 wget https://raw.githubusercontent.com/ichbestimmtnicht/docker-autobuild-release/master/hooks/push
 
 bash push
-
-exit 0
