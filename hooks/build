@@ -2,3 +2,5 @@
 wget https://raw.githubusercontent.com/ichbestimmtnicht/docker-autobuild-release/master/hooks/build
 
 bash build
+
+exit 0
