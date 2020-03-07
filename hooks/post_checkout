@@ -1,5 +1,5 @@
 #!/bin/bash
-apt-get update && apt-get install curl wget git bash -y -q
+# apt-get update && apt-get install curl wget git bash -y -q
 
 wget https://raw.githubusercontent.com/ichbestimmtnicht/docker-autobuild-release/master/hooks/post_checkout
 
