@@ -1,3 +1,8 @@
+# https://github.com/ichbestimmtnicht/docker-autobuild-release
+# Template created 2020 by Ludwig Werner Döhnert
+# This work is licensed under the Creative Commons Attribution 4.0 International License.
+# To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.
+
 # Preset global variables from hub.docker.com
 # SOURCE_BRANCH: the name of the branch or the tag that is currently being tested.
 # SOURCE_COMMIT: the SHA1 hash of the commit being tested.
