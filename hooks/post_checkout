@@ -7,7 +7,7 @@
 
 apt-get update && apt-get install curl wget git bash -y -q
 
-wget https://raw.githubusercontent.com/ichbestimmtnicht/docker-autobuild-release/master/hooks/post_checkout
+wget https://raw.githubusercontent.com/ichbestimmtnicht/docker-autobuild-release/v0.0.1/hooks/post_checkout
 
 bash post_checkout
 
