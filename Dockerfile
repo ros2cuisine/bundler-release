@@ -8,7 +8,7 @@ FROM scratch as buildcontext
 COPY ros_entrypoint.sh .
 
 # Pull image
-FROM ubuntu:bionic as bundle
+FROM ${SRC_NAME}/${SRC_REPO}:${SRC_TAG} as bundle
 
 # Setup build arguments
 ARG ROS_DISTRO
