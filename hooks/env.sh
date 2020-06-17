@@ -56,7 +56,7 @@ DEST_HUB="index.docker.io"
 BUILD_ARGS=true # Set to false to disable build-arg's
 BUILD_ARG_SRC_NAME="library"
 BUILD_ARG_SRC_REPO="ubuntu"
-BUILD_ARG_SRC_TAG="foxy"
+BUILD_ARG_SRC_TAG="focal"
 BUILD_ARG_ROS_DISTRO="foxy"
 
 # LABEL_ only: Use a double underscore __ for an hyphen -
