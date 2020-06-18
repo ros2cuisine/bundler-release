@@ -47,9 +47,7 @@ RUN echo 'Etc/UTC' > /etc/timezone && \
         tzdata \
         dirmngr \
         gnupg2 \
-        wget \
         curl \
-        gnupg2 \
         lsb-release \
     && rm -rf /var/lib/apt/lists/* \
     # setup keys
