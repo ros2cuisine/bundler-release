@@ -35,7 +35,7 @@ WORKDIR /workspaces/cuisine
 RUN echo 'Etc/UTC' > /etc/timezone && \
     ln -s -f /usr/share/zoneinfo/Etc/UTC /etc/localtime \
     && apt-get update \
-    && apt-get install -q -y 
+    && apt-get install -q -y \
         tzdata \
         dirmngr \
         gnupg2 \
